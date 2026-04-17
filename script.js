@@ -34,6 +34,14 @@ function addTransaction(e) {
 function updateTransactionList() {
   transactionListEl.innerHTML = "";
 
+  if (transactions.length === 0) {
+    const emptyState = document.createElement("p");
+    emptyState.className = "empty-state";
+    emptyState.textContent = "No transactions yet. Add one to get started.";
+    transactionListEl.appendChild(emptyState);
+    return;
+  }
+
   const sortedTransactions = [...transactions].reverse();
 
   sortedTransactions.forEach((transaction) => {
@@ -61,7 +69,10 @@ function createTransactionElement(transaction) {
 
 function updateSummary() {
   // 100, -50, 200, -200 => 50
-  const balance = transactions.reduce((acc, transaction) => acc + transaction.amount, 0);
+  const balance = transactions.reduce(
+    (acc, transaction) => acc + transaction.amount,
+    0,
+  );
 
   const income = transactions
     .filter((transaction) => transaction.amount > 0)
@@ -88,7 +99,7 @@ function removeTransaction(id) {
   // filter out the one we wanted to delete
   transactions = transactions.filter((transaction) => transaction.id !== id);
 
-  localStorage.setItem("transcations", JSON.stringify(transactions));
+  localStorage.setItem("transactions", JSON.stringify(transactions));
 
   updateTransactionList();
   updateSummary();
