@@ -82,16 +82,15 @@ function updateSummary() {
     .filter((transaction) => transaction.amount < 0)
     .reduce((acc, transaction) => acc + transaction.amount, 0);
 
-  // update ui => todo: fix the formatting
   balanceEl.textContent = formatCurrency(balance);
   incomeAmountEl.textContent = formatCurrency(income);
   expenseAmountEl.textContent = formatCurrency(expenses);
 }
 
 function formatCurrency(number) {
-  return new Intl.NumberFormat("en-US", {
+  return new Intl.NumberFormat("en-IN", {
     style: "currency",
-    currency: "USD",
+    currency: "INR",
   }).format(number);
 }
 
